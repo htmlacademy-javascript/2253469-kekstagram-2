@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александр Неретин](https://up.htmlacademy.ru/javascript-individual/2/user/2253469).
-* Наставник: `Неизвестно`.
+[Юрий Белобородов]: (https://htmlacademy.ru/profile/id514591).
 
 ---
 

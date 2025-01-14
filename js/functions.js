@@ -1,14 +1,10 @@
-function makeString (string, length) {
-  if (string.length <= length) {
-    return true;
-  } else {
-    return false;
-  }
+function checkStringLength (string, length) {
+  return string.length <= length;
 }
 
-makeString();
+checkStringLength('hello world', 3);
 
-const ifPalindrom = (string) => {
+const isPalindrom = (string) => {
   string = string.replaceAll(' ', '').toLoweCase();
 
   let reversedLine = '';
@@ -19,6 +15,6 @@ const ifPalindrom = (string) => {
   return string === reversedLine;
 };
 
-ifPalindrom();
+isPalindrom('hello');
 
 

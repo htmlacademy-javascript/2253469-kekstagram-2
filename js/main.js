@@ -35,11 +35,9 @@ for (let i = 0; i < 30; i++) {
   });
 }
 
-console.log(comments);
-
 const photoDescription = function () {
   const randomID = id[getRandomInt(0, id.length - 1)];
-  const randomUrl = 'photos/{getRandomInt(1, 25)}.jpg';
+  const randomUrl = 'photos/{{$randomID}}.jpg';
   const randomLikes = likes[getRandomInt(0, likes.length - 1)];
   const randomComments = comments[getRandomInt(0, comments.length - 1)];
 
@@ -54,5 +52,4 @@ const photoDescription = function () {
 
 const photoDescriptionArray = Array.from({length: 25}, photoDescription);
 
-console.log(photoDescriptionArray);
 

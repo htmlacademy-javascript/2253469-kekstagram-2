@@ -5,7 +5,7 @@ function checkStringLength (string, length) {
 checkStringLength('hello world', 3);
 
 const isPalindrom = (string) => {
-  string = string.replaceAll(' ', '').toLoweCase();
+  string = string.replaceAll(' ', '').toLowerCase();
 
   let reversedLine = '';
 

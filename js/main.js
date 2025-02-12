@@ -10,7 +10,7 @@ const description = 'Мое фото';
 
 const likes = Array.from({ length: 200 - 15 + 1 }, (_, i) => i + 15);
 
-const message = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -19,7 +19,7 @@ const message = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const name = [
+const names = [
   'Вася',
   'Лена',
   'Саша',
@@ -27,32 +27,27 @@ const name = [
   'Вова',
 ];
 
-
-function comments() {
-  for (let i = 0; i < 30; i++) {
-    comments.push({
-      idComment: Math.floor(Math.random() * 1000),
-      avatar: 'img/avatar-{{getRandomInt(1, 6)}}.svg',
-      message: message[getRandomInt(0, message.length - 1)],
-      nameComments: name[getRandomInt(0, name.length - 1)]
-    });
+function getComment() {
+  return {
+    commentId: Math.floor(Math.random() * 1000),
+    avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
+    message: messages[getRandomInt(0, messages.length - 1)],
+    userName: names[getRandomInt(0, names.length - 1)]
   }
 }
 
-function getPhotoDescription() {
-  const randomID = id[getRandomInt(0, id.length - 1)];
-  const randomUrl = 'photos/{{$randomID}}.jpg';
-  const randomLikes = likes[getRandomInt(0, likes.length - 1)];
-  const randomComments = comments[getRandomInt(0, comments.length - 1)];
+function getPhotoDescription(index) {
+  const id = index + 1;
 
   return {
-    id: id[randomID],
-    url: randomUrl,
+    photoId: id,
+    url: `photos/${id}.jpg`,
     description: description,
-    likes: likes[randomLikes],
-    comments: randomComments,
+    likes: likes[getRandomInt(0, likes.length - 1)],
+    comments: Array.from({ length: 10 }, (_, index) => getComment(index)),
   };
 };
 
-const photoDescriptionArray = Array.from({ length: 25 }, getPhotoDescription);
-console.log(photoDescriptionArray);
+const mockPhotos = Array.from({ length: 25 }, (_, index) => getPhotoDescription(index));
+
+console.log(mockPhotos);

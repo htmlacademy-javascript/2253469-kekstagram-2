@@ -1,3 +1,2 @@
-import {mockPhotos} from './data.js';
-
-console.log(mockPhotos);
+import './data.js';
+import './miniatures.js';

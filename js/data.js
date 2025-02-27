@@ -1,6 +1,6 @@
-import {getRandomInt} from './util.js';
+import { getRandomInt } from './util.js';
 
-const id = Array.from({ length: 25 }, (_, i) => i + 1);
+// const id = Array.from({ length: 25 }, (_, i) => i + 1);
 
 const description = 'Мое фото';
 
@@ -29,7 +29,7 @@ function getComment() {
     avatar: `img/avatar-${getRandomInt(1, 6)}.svg`,
     message: messages[getRandomInt(0, messages.length - 1)],
     userName: names[getRandomInt(0, names.length - 1)]
-  }
+  };
 }
 
 function getPhotoDescription(index) {
@@ -42,8 +42,8 @@ function getPhotoDescription(index) {
     likes: likes[getRandomInt(0, likes.length - 1)],
     comments: Array.from({ length: 10 }, (_, index) => getComment(index)),
   };
-};
+}
 
 const mockPhotos = Array.from({ length: 25 }, (_, index) => getPhotoDescription(index));
 
-export {mockPhotos};
+export { mockPhotos };

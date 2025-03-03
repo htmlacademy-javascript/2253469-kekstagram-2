@@ -8,7 +8,7 @@ function getPictureCardTemplate(photoObject) {
   miniatureElement.querySelector('.picture__img').src = photoObject.url;
   miniatureElement.querySelector('.picture__img').alt = photoObject.description;
   miniatureElement.querySelector('.picture__likes').textContent = photoObject.likes;
-  miniatureElement.querySelector('.picture__comments').textContent = photoObject.comments.lenght;
+  miniatureElement.querySelector('.picture__comments').textContent = photoObject.comments.length;
 
   return miniatureElement;
 }

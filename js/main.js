@@ -1,2 +1,4 @@
-import './data.js';
-import './miniatures.js';
+import {mockPhotos} from './data.js';
+import {renderPictures} from './miniatures.js';
+
+renderPictures(mockPhotos);

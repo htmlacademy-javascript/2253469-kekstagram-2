@@ -44,6 +44,5 @@ function getPhotoDescription(index) {
   };
 }
 
-const mockPhotos = Array.from({ length: 25 }, (_, index) => getPhotoDescription(index));
+export const mockPhotos = Array.from({ length: 25 }, (_, index) => getPhotoDescription(index));
 
-export { mockPhotos };

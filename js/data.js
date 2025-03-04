@@ -40,7 +40,7 @@ function getPhotoDescription(index) {
     url: `photos/${id}.jpg`,
     description: description,
     likes: likes[getRandomInt(0, likes.length - 1)],
-    comments: Array.from({ length: 10 }, (_, index) => getComment(index)),
+    comments: Array.from({ length: 10 }, () => getComment()),
   };
 }
 

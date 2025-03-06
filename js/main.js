@@ -1,3 +1,4 @@
 import {mockPhotos} from './data.js';
+import {renderPictures} from './miniatures.js';
 
-console.log(mockPhotos);
+renderPictures(mockPhotos);

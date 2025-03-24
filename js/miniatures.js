@@ -1,10 +1,10 @@
 const miniature = document.querySelector('#picture').content;
 const miniatureList = document.querySelector('.pictures');
-
 const similarMiniaturesFragment = document.createDocumentFragment();
 
 function getPictureCardTemplate(photoObject) {
   const miniatureElement = miniature.cloneNode(true);
+
   miniatureElement.querySelector('.picture__img').src = photoObject.url;
   miniatureElement.querySelector('.picture__img').alt = photoObject.description;
   miniatureElement.querySelector('.picture__likes').textContent = photoObject.likes;
@@ -20,3 +20,5 @@ export function renderPictures(picturesData) {
   });
   miniatureList.appendChild(similarMiniaturesFragment);
 }
+
+export {miniatureList};

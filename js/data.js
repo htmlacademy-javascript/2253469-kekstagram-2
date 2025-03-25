@@ -1,7 +1,5 @@
 import { getRandomInt } from './util.js';
 
-// const id = Array.from({ length: 25 }, (_, i) => i + 1);
-
 const description = 'Мое фото';
 
 const likes = Array.from({ length: 200 - 15 + 1 }, (_, i) => i + 15);

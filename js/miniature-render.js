@@ -11,26 +11,26 @@ const commentsCount = bigMiniature.querySelector('.social__comment-count');
 const commentLoader = bigMiniature.querySelector('.social__comments-loader');
 const bigMiniatureCancel = bigMiniature.querySelector('.big-picture__cancel');
 
-const onEscKeydown = (evt) => {
+function onEscKeydown (evt) {
   if (evt.key === 'Escape') {
     closeBigMiniature();
   }
-};
+}
 
 
-const onBigMiniatureCancelClick = () => {
+function onBigMiniatureCancelClick (){
   closeBigMiniature();
-};
+}
 
 
-const closeBigMiniature = () => {
+function closeBigMiniature () {
   bigMiniature.classList.add('hidden');
   document.removeEventListener('keydown', onEscKeydown);
   bigMiniatureCancel.removeEventListener('click', onBigMiniatureCancelClick);
-};
+}
 
 
-const openBigMiniature = (photoId) => {
+function openBigMiniature (photoId) {
 
   const currentPhoto = mockPhotos.find((object) => object.photoId === Number(photoId));
   const socialCommentsFragment = document.createDocumentFragment();
@@ -58,7 +58,7 @@ const openBigMiniature = (photoId) => {
   bigMiniatureCancel.addEventListener('click', onBigMiniatureCancelClick);
   document.body.classList.add('.modal-open');
   document.addEventListener('keydown', onEscKeydown);
-};
+}
 
 miniatureList.addEventListener('click', (evt) => {
   const currentMiniatureNode = evt.target.closest('.picture');

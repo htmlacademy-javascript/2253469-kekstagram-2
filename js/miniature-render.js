@@ -1,5 +1,6 @@
 import { mockPhotos } from './data.js';
 
+const miniatureList = document.querySelector('.pictures');
 const bigMiniature = document.querySelector('.big-picture');
 const bigMiniatureimg = bigMiniature.querySelector('.big-picture__img').querySelector('img');
 const likesCount = bigMiniature.querySelector('.likes-count');
@@ -10,24 +11,28 @@ const commentsCount = bigMiniature.querySelector('.social__comment-count');
 const commentLoader = bigMiniature.querySelector('.social__comments-loader');
 const bigMiniatureCancel = bigMiniature.querySelector('.big-picture__cancel');
 
-const onBigMiniatureCancelClick = () => {
-  closeBigMiniature();
-};
-
 const onEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     closeBigMiniature();
   }
 };
 
-const closeBigMiniature = () => {
-  bigMiniature.classList.add('hidden');
-  bigMiniatureCancel.removeEventListener('click', onBigMiniatureCancelClick);
-  document.removeEventListener('keydown', onEscKeydown);
+
+const onBigMiniatureCancelClick = () => {
+  closeBigMiniature();
 };
 
-const openBigMiniature = (photoID) => {
-  const currentPhoto = mockPhotos.find((photo) => photo.id === Number(photoID));
+
+const closeBigMiniature = () => {
+  bigMiniature.classList.add('hidden');
+  document.removeEventListener('keydown', onEscKeydown);
+  bigMiniatureCancel.removeEventListener('click', onBigMiniatureCancelClick);
+};
+
+
+const openBigMiniature = (photoId) => {
+
+  const currentPhoto = mockPhotos.find((object) => object.photoId === Number(photoId));
   const socialCommentsFragment = document.createDocumentFragment();
 
   bigMiniatureimg.src = currentPhoto.url;
@@ -55,6 +60,12 @@ const openBigMiniature = (photoID) => {
   document.addEventListener('keydown', onEscKeydown);
 };
 
-export {openBigMiniature};
+miniatureList.addEventListener('click', (evt) => {
+  const currentMiniatureNode = evt.target.closest('.picture');
+
+  if (currentMiniatureNode) {
+    openBigMiniature(currentMiniatureNode.dataset.photoId);
+  }
+});
 
 

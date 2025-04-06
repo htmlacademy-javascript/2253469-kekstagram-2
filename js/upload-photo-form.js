@@ -1,98 +1,91 @@
 import { sendData } from './api';
 import { showSuccessMessage } from './submit-message';
 import { showLoadingDataError } from './error';
+import { initScale, resetScale } from './scale-control.js';
+import { resetEffect, initEffect } from './effects-slider.js';
 
-const uploadForm = document.querySelector('.img-upload__form');
-const pageBody = document.querySelector('body');
 
-const uploadFileControl = uploadForm.querySelector('#upload-file');
-const photoEditorForm = uploadForm.querySelector('.img-upload__overlay');
-const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
+const imgUploadSection = document.querySelector('.img-upload');
+const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
+const imgUploadInput = imgUploadSection.querySelector('.img-upload__input');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
+const imgUploadOverlay = imgUploadSection.querySelector('.img-upload__overlay');
+const body = document.querySelector('body');
+const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
+const textHashtags = imgUploadSection.querySelector('.text__hashtags');
+const textDescription = imgUploadSection.querySelector('.text__description');
+const submitButton = imgUploadSection.querySelector('.img-upload__submit');
+const effectsPreview = imgUploadSection.querySelectorAll('.effects__preview');
 
-const hashtagInput = uploadForm.querySelector('.text-hashtags');
-const commentInput = uploadForm.querySelector('.text-description');
-const submitButton = document.querySelector('#upload-submit');
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-function onPhotoEditorResetBtnClick () {
-  closePhotoEditor();
-}
+const onDocumentEscKeydown = (evt) => {
 
-function onEscKeydown (evt) {
-  if (evt.ket === 'Escape') {
-    evt.preventDefault();
-    if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
-      evt.stopPropagation();
-    } else {
-      uploadForm.reset();
-      closePhotoEditor();
-    }
+  evt.preventDefault();
+  const INPUT_FIELDS = [textHashtags, textDescription];
+  if (INPUT_FIELDS.includes(document.activeElement)) {
+    evt.stopPropagation();
+    return;
   }
-}
-
-function closePhotoEditor () {
-  photoEditorForm.classList.add('hidden');
-  pageBody.classList.remove('modal-open');
-  document.removeEventListener('keydown', onEscKeydown);
-  photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
-  uploadFileControl.value = '';
-}
-
-export function initUploadModal () {
-  uploadFileControl.addEventListener ('change', () => {
-    photoEditorForm.classList.remove('hidden');
-    pageBody.classList.add('modal-open');
-    photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
-    document.addEventListener('keydown' , onEscKeydown);
-  });
-}
-
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper'
-});
-
-pristine.addValidator(hashtagInput, (value) => {
-  const hashtag = /^#[a-zа-я0-9]{1,19}$/i.test(value);
-  return hashtag;
-});
-
-pristine.addValidator(commentInput, (value) => {
-  const comment = /[a-zа-я0-9]{0,140}$/i.test(value);
-  return comment;
-});
-
-function blockSubmitButton () {
-  submitButton.disabled = true;
-}
-
-function unblockSubmitButton () {
-  submitButton.disabled = false;
-}
-
-blockSubmitButton();
-
-const setImgUploadFormSubmit = (onSuccess) => {
-  uploadForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if(!pristine.validate()) {
-      return;
-    }
-    hashtagInput.value = hashtagInput.value.trim().replaceAll(/\s+/g, ' ');
-
-    blockSubmitButton();
-
-    sendData(new FormData(evt.target))
-      .then(onSuccess)
-      .then(showSuccessMessage)
-      .catch(() => {
-        showLoadingDataError();
-      })
-      .finally(unblockSubmitButton);
-  });
+  closeUploadForm();
 };
 
-setImgUploadFormSubmit(closePhotoEditor);
+const onImgUploadInputChange = () => {
+  const file = imgUploadInput.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    const url = URL.createObjectURL(file);
+    imgUploadPreview.src = url;
+    effectsPreview.forEach((effectPreview) => {
+      effectPreview.style.backgroundImage = `url(${url})`;
+    });
+  }
+  openUploadForm();
+};
 
-uploadFileControl.addEventListener('change', initUploadModal);
+function openUploadForm () {
+  imgUploadOverlay.classList.remove('hidden');
+  body.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentEscKeydown);
+  imgUploadCancelButton.addEventListener('click', closeUploadForm);
+}
 
+function closeUploadForm () {
+  imgUploadOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  imgUploadCancelButton.removeEventListener('click', closeUploadForm);
+  document.removeEventListener('keydown', onDocumentEscKeydown);
+  imgUploadForm.reset();
+  resetScale();
+  resetEffect();
+}
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+};
+
+const onImgUploadFormSubmit = (onSuccess) => (evt) => {
+  evt.preventDefault();
+  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
+
+  blockSubmitButton();
+
+  sendData(new FormData(evt.target))
+    .then(onSuccess)
+    .then(showSuccessMessage)
+    .catch(() => showLoadingDataError)
+    .finally(unblockSubmitButton);
+
+};
+
+export const initImgUploadForm = () => {
+  imgUploadInput.addEventListener('change', onImgUploadInputChange);
+  imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
+  initScale();
+  initEffect();
+};

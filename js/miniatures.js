@@ -23,3 +23,13 @@ export function renderPictures(picturesData) {
 
   miniatureList.appendChild(similarMiniaturesFragment);
 }
+
+const clearPhotoCards = () => {
+  const pictures = miniatureList.querySelectorAll('.picture');
+  pictures.forEach((picture) => picture.remove());
+};
+
+export const renderPhotoCards = (photosArray) => {
+  clearPhotoCards();
+  miniatureList.append(renderPictures(photosArray));
+};

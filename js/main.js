@@ -4,6 +4,7 @@ import './miniature-render.js';
 import { initUploadModal } from './upload-photo-form.js';
 import './form-filters.js';
 import './effects-slider.js';
+import './upload-photo-form.js';
 
 renderPictures(mockPhotos);
 initUploadModal ();

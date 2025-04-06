@@ -8,4 +8,3 @@ import './upload-photo-form.js';
 
 renderPictures(mockPhotos);
 initImgUploadForm ();
-

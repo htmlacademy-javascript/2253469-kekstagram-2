@@ -4,7 +4,6 @@ const similarMiniaturesFragment = document.createDocumentFragment();
 
 function getPictureCardTemplate(photoObject) {
   const miniatureElement = miniature.cloneNode(true);
-
   miniatureElement.querySelector('.picture').dataset.photoId = photoObject.id;
   miniatureElement.querySelector('.picture__img').src = photoObject.url;
   miniatureElement.querySelector('.picture__img').alt = photoObject.description;
@@ -16,12 +15,10 @@ function getPictureCardTemplate(photoObject) {
 
 
 export function renderPictures(picturesData) {
-  if (picturesData.length > 0) {
-    picturesData.forEach((photoObject) => {
-      const pictureCard = getPictureCardTemplate(photoObject);
-      similarMiniaturesFragment.appendChild(pictureCard);
-    });
-  }
+  picturesData.slice().forEach((photoObject) => {
+    const pictureCard = getPictureCardTemplate(photoObject);
+    similarMiniaturesFragment.appendChild(pictureCard);
+  });
 
   miniatureList.appendChild(similarMiniaturesFragment);
 }

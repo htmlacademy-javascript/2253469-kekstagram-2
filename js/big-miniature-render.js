@@ -1,4 +1,5 @@
 import { renderComments, clearComments } from './comments-render.js';
+import { isEscapeKey } from './util.js';
 
 const miniatureList = document.querySelector('.pictures');
 const bigMiniature = document.querySelector('.big-picture');
@@ -14,7 +15,7 @@ export const fillPictures = (photos) => {
 
 
 function onEscKeydown (evt) {
-  if (evt.key === 'Escape') {
+  if (!isEscapeKey (evt)) {
     closeBigMiniature();
   }
 }

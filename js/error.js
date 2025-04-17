@@ -5,42 +5,42 @@ const dataErrorTemplate = document.querySelector('#data-error').content.querySel
 const uploadingErrorTemplate = document.querySelector('#error').content.querySelector('.error');
 const body = document.querySelector('body');
 
-export const showLoadingDataError = () => {
+export function showLoadingDataError (){
   const dataErrorMessage = dataErrorTemplate.cloneNode(true);
   body.append(dataErrorMessage);
   setTimeout(() => {
     dataErrorMessage.remove();
   }, REMOVE_ERROR_MESSAGE_TIME);
-};
+}
 
-export const showUploadingDataError = () => {
+export function showUploadingDataError () {
   const uploadingErrorMessage = uploadingErrorTemplate.cloneNode(true);
   const errorButton = uploadingErrorMessage.querySelector('.error__button');
 
   body.append(uploadingErrorMessage);
 
-  const onBodyEscKeydown = (evt) => {
+  function onBodyEscKeydown (evt) {
     if (!isEscapeKey(evt)) {
       return;
     }
     evt.preventDefault();
     evt.stopPropagation();
     closeErrorMessage();
-  };
+  }
 
-  const onBodyClick = (evt) => {
+  function onBodyClick (evt){
     if (!document.contains(uploadingErrorMessage)) {
       return;
     }
     if (!evt.target.closest('.error__inner')) {
       closeErrorMessage();
     }
-  };
+  }
 
-  const onErrorButtonClick = (evt) => {
+  function onErrorButtonClick (evt) {
     evt.stopPropagation();
     closeErrorMessage();
-  };
+  }
 
   function closeErrorMessage () {
     if (!document.contains(uploadingErrorMessage)) {
@@ -55,4 +55,4 @@ export const showUploadingDataError = () => {
   errorButton.addEventListener('click', onErrorButtonClick);
   body.addEventListener('keydown', onBodyEscKeydown);
   body.addEventListener('click', onBodyClick);
-};
+}

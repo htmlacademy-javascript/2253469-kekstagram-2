@@ -8,6 +8,7 @@ import './upload-photo-form.js';
 import { showLoadingDataError } from './error.js';
 import { createSlider } from './effects-slider.js';
 import { fillPictures } from './big-miniature-render.js';
+import { initFilters } from './filters.js';
 
 initImgUploadForm ();
 createSlider();
@@ -17,6 +18,7 @@ getData()
   .then((photos) => {
     renderPictures(photos);
     fillPictures(photos);
+    initFilters(photos);
   }
   )
   .catch(() => {

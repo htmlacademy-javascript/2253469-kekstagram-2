@@ -1,15 +1,3 @@
-const imgUploadSection = document.querySelector('.img-upload');
-const imgUploadPreview = imgUploadSection.querySelector(
-  '.img-upload__preview img'
-);
-const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
-const effectsList = imgUploadSection.querySelector('.effects__list');
-const sliderContainer = imgUploadSection.querySelector(
-  '.img-upload__effect-level'
-);
-const effectLevel = imgUploadSection.querySelector('.effect-level__value');
-const originalFilter = imgUploadSection.querySelector('#effect-none');
-
 const EFFECT_SETTINGS = {
   none: {
     hidden: true,
@@ -61,7 +49,15 @@ const EFFECT_SETTINGS = {
   },
 };
 
-const createSlider = () => {
+const imgUploadSection = document.querySelector('.img-upload');
+const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview img');
+const effectSlider = imgUploadSection.querySelector('.effect-level__slider');
+const effectLevel = imgUploadSection.querySelector('.effect-level__value');
+const effectsList = imgUploadSection.querySelector('.effects__list');
+const sliderContainer = imgUploadSection.querySelector('.img-upload__effect-level');
+const originalFilter = imgUploadSection.querySelector('#effect-none');
+
+export const createSlider = () => {
   noUiSlider.create(effectSlider, {
     range: {
       min: 0,
@@ -109,7 +105,6 @@ const onEffectsListChange = (evt) => {
 export const initEffect = () => {
   effectsList.addEventListener('change', onEffectsListChange);
   sliderContainer.classList.add('hidden');
-  createSlider();
 };
 
 export function resetEffect () {

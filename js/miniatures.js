@@ -4,8 +4,7 @@ const similarMiniaturesFragment = document.createDocumentFragment();
 
 function getPictureCardTemplate(photoObject) {
   const miniatureElement = miniature.cloneNode(true);
-
-  miniatureElement.querySelector('.picture').dataset.photoId = photoObject.photoId;
+  miniatureElement.querySelector('.picture').dataset.photoId = photoObject.id;
   miniatureElement.querySelector('.picture__img').src = photoObject.url;
   miniatureElement.querySelector('.picture__img').alt = photoObject.description;
   miniatureElement.querySelector('.picture__likes').textContent = photoObject.likes;
@@ -16,7 +15,7 @@ function getPictureCardTemplate(photoObject) {
 
 
 export function renderPictures(picturesData) {
-  picturesData.forEach((photoObject) => {
+  picturesData.slice().forEach((photoObject) => {
     const pictureCard = getPictureCardTemplate(photoObject);
     similarMiniaturesFragment.appendChild(pictureCard);
   });

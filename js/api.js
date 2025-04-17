@@ -1,3 +1,5 @@
+import { showLoadingDataError } from './error.js';
+
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
@@ -6,11 +8,6 @@ const Route = {
 const Method = {
   GET: 'GET',
   POST: 'POST',
-};
-
-export const ErrorText = {
-  [Method.GET]: 'Не удалось загрузить данные. Попробуйте еще раз',
-  [Method.POST]: 'Не удалось отправить данные формы'
 };
 
 const load = (route, showError, method = Method.GET, body = null) =>
@@ -25,6 +22,6 @@ const load = (route, showError, method = Method.GET, body = null) =>
       throw new Error(showError());
     });
 
-export const getData = () => load(Route.GET_DATA, ErrorText);
+export const getData = () => load(Route.GET_DATA, showLoadingDataError);
 
-export const sendData = (body) => load(Route.SEND_DATA, ErrorText, Method.POST, body);
+export const sendData = (body) => load(Route.SEND_DATA, showLoadingDataError, Method.POST, body);

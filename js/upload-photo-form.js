@@ -3,8 +3,10 @@ import { showSuccessMessage } from './submit-message';
 import { showLoadingDataError } from './error';
 import { initScale, resetScale } from './scale-control.js';
 import { resetEffect, initEffect } from './effects-slider.js';
+import { isEscapeKey } from './util.js';
+import { initPristineValidation, pristine } from './validation-prestine.js';
 
-
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const imgUploadSection = document.querySelector('.img-upload');
 const imgUploadForm = imgUploadSection.querySelector('.img-upload__form');
 const imgUploadInput = imgUploadSection.querySelector('.img-upload__input');
@@ -12,25 +14,25 @@ const imgUploadPreview = imgUploadSection.querySelector('.img-upload__preview im
 const imgUploadOverlay = imgUploadSection.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
 const imgUploadCancelButton = imgUploadSection.querySelector('.img-upload__cancel');
-const textHashtags = imgUploadSection.querySelector('.text__hashtags');
+const textHashtag = imgUploadSection.querySelector('.text__hashtags');
 const textDescription = imgUploadSection.querySelector('.text__description');
 const submitButton = imgUploadSection.querySelector('.img-upload__submit');
 const effectsPreview = imgUploadSection.querySelectorAll('.effects__preview');
 
-const FILE_TYPES = ['jpg', 'jpeg', 'png'];
-
-const onDocumentEscKeydown = (evt) => {
-
+function onDocumentEscKeydown (evt){
+  if (!isEscapeKey(evt)) {
+    return;
+  }
   evt.preventDefault();
-  const INPUT_FIELDS = [textHashtags, textDescription];
+  const INPUT_FIELDS = [textHashtag, textDescription];
   if (INPUT_FIELDS.includes(document.activeElement)) {
     evt.stopPropagation();
     return;
   }
   closeUploadForm();
-};
+}
 
-const onImgUploadInputChange = () => {
+function onImgUploadInputChange () {
   const file = imgUploadInput.files[0];
   const fileName = file.name.toLowerCase();
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
@@ -42,13 +44,15 @@ const onImgUploadInputChange = () => {
     });
   }
   openUploadForm();
-};
+}
 
 function openUploadForm () {
   imgUploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentEscKeydown);
   imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  initScale();
+  initEffect();
 }
 
 function closeUploadForm () {
@@ -61,17 +65,20 @@ function closeUploadForm () {
   resetEffect();
 }
 
-const blockSubmitButton = () => {
+function blockSubmitButton (){
   submitButton.disabled = true;
-};
+}
 
-const unblockSubmitButton = () => {
+function unblockSubmitButton () {
   submitButton.disabled = false;
-};
+}
 
 const onImgUploadFormSubmit = (onSuccess) => (evt) => {
   evt.preventDefault();
-  textHashtags.value = textHashtags.value.trim().replaceAll(/\s+/g, ' ');
+  if (!pristine.validate()) {
+    return;
+  }
+  textHashtag.value = textHashtag.value.trim().replaceAll(/\s+/g, ' ');
 
   blockSubmitButton();
 
@@ -83,9 +90,8 @@ const onImgUploadFormSubmit = (onSuccess) => (evt) => {
 
 };
 
-export const initImgUploadForm = () => {
+export function initImgUploadForm () {
   imgUploadInput.addEventListener('change', onImgUploadInputChange);
   imgUploadForm.addEventListener('submit', onImgUploadFormSubmit(closeUploadForm));
-  initScale();
-  initEffect();
-};
+  initPristineValidation();
+}

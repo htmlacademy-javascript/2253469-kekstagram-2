@@ -64,7 +64,7 @@ const validateHashtags = () => {
   });
 };
 
-export const initPristineValidation = () => {
+export function initPristineValidation (){
   pristine.addValidator(textHashtags, validateHashtags, getErrorMessage);
   pristine.addValidator(textDescription, validateTextDescription, `длина комментария не может быть больше ${MAX_TEXT_DESCRIPTION_LENGTH} символов`);
-};
+}

@@ -30,5 +30,5 @@ const clearPhotoCards = () => {
 
 export const renderPhotoCards = (photosArray) => {
   clearPhotoCards();
-  miniatureList.append(renderPictures(photosArray));
+  renderPictures(photosArray);
 };

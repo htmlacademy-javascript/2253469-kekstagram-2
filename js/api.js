@@ -10,6 +10,11 @@ const Method = {
   POST: 'POST',
 };
 
+export const ErrorText = {
+  [Method.GET]: 'Не удалось загрузить данные. Попробуйте еще раз',
+  [Method.POST]: 'Не удалось отправить данные формы'
+};
+
 const load = (route, showError, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
     .then((response) => {
@@ -25,3 +30,4 @@ const load = (route, showError, method = Method.GET, body = null) =>
 export const getData = () => load(Route.GET_DATA, showLoadingDataError);
 
 export const sendData = (body) => load(Route.SEND_DATA, showUploadingDataError, Method.POST, body);
+

@@ -1,6 +1,6 @@
 import { sendData } from './api';
 import { showSuccessMessage } from './submit-message';
-import { showLoadingDataError } from './error';
+import { showUploadingDataError} from './error.js';
 import { initScale, resetScale } from './scale-control.js';
 import { resetEffect, initEffect } from './effects-slider.js';
 import { isEscapeKey } from './util.js';
@@ -55,14 +55,19 @@ function openUploadForm () {
   initEffect();
 }
 
+function onImgUploadCancelButtonClick () {
+  closeUploadForm();
+}
+
 function closeUploadForm () {
   imgUploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  imgUploadCancelButton.removeEventListener('click', closeUploadForm);
+  imgUploadCancelButton.removeEventListener('click', onImgUploadCancelButtonClick);
   document.removeEventListener('keydown', onDocumentEscKeydown);
   imgUploadForm.reset();
   resetScale();
   resetEffect();
+  pristine.reset();
 }
 
 function blockSubmitButton (){
@@ -85,7 +90,7 @@ const onImgUploadFormSubmit = (onSuccess) => (evt) => {
   sendData(new FormData(evt.target))
     .then(onSuccess)
     .then(showSuccessMessage)
-    .catch(() => showLoadingDataError)
+    .catch(() => showUploadingDataError)
     .finally(unblockSubmitButton);
 
 };

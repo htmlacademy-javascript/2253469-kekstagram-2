@@ -15,7 +15,7 @@ export const fillPictures = (photos) => {
 
 
 function onEscKeydown (evt) {
-  if (!isEscapeKey (evt)) {
+  if (isEscapeKey (evt)) {
     closeBigMiniature();
   }
 }
@@ -46,7 +46,7 @@ export function openBigMiniature (photoId) {
 
   bigMiniature.classList.remove('hidden');
   bigMiniatureCancel.addEventListener('click', onBigMiniatureCancelClick);
-  document.body.classList.add('.modal-open');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onEscKeydown);
 }
 miniatureList.addEventListener('click', (evt) => {

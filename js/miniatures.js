@@ -1,5 +1,5 @@
-const miniature = document.querySelector('#picture').content;
 const miniatureList = document.querySelector('.pictures');
+const miniature = document.querySelector('#picture').content;
 const similarMiniaturesFragment = document.createDocumentFragment();
 
 function getPictureCardTemplate(photoObject) {

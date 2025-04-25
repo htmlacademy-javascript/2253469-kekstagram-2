@@ -1,4 +1,4 @@
-import { showLoadingDataError } from './error.js';
+import { showLoadingDataError, showUploadingDataError } from './error.js';
 
 const BASE_URL = 'https://31.javascript.htmlacademy.pro/kekstagram';
 const Route = {
@@ -24,4 +24,5 @@ const load = (route, showError, method = Method.GET, body = null) =>
 
 export const getData = () => load(Route.GET_DATA, showLoadingDataError);
 
-export const sendData = (body) => load(Route.SEND_DATA, showLoadingDataError, Method.POST, body);
+export const sendData = (body) => load(Route.SEND_DATA, showUploadingDataError, Method.POST, body);
+
